@@ -24,8 +24,16 @@ async function searchMovies(page = 1) {
   const searchInput = document.getElementById("searchInput");
   const searchTerm = searchInput.value || "movie";
 
+  //Get year filter
+  const yearFilter = document.getElementById("yearFilter").value;
+
   // Create the search URL
-  const searchUrl = `https://www.omdbapi.com/?s=${searchTerm}&page=${page}&apikey=${apiKey}&type=movie`;
+  let searchUrl = `https://www.omdbapi.com/?s=${searchTerm}&page=${page}&apikey=${apiKey}&type=movie`;
+
+  //add filter to url
+  if (yearFilter) {
+    searchUrl += `&y=${yearFilter}`;
+  }
 
   // Get the list of movies
   const data = await fetchMovieData(searchUrl);
@@ -45,6 +53,25 @@ async function searchMovies(page = 1) {
     document.getElementById("nextButton").disabled = true;
     return;
   }
+
+  //add dropdown for year filter
+  const yearSelect = document.getElementById("yearFilter");
+
+  // Loop through the years from 1880 to 2024
+  for (let year = 2024; year >= 1900; year--) {
+    const option = document.createElement("option");
+    option.value = year;
+    option.textContent = year;
+    yearSelect.appendChild(option);
+  }
+
+  //search movies when the year is changed
+  function handleYearFilterChange() {
+    searchMovies();
+  }
+  document
+    .getElementById("yearFilter")
+    .addEventListener("change", handleYearFilterChange);
 
   // Get detailed info for first 8 movies
   movieData = [];
