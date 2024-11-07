@@ -54,13 +54,13 @@ body {
   background: #0056b3;
 }
 
-.filters {
+.filter {
   display: flex;
   gap: 1rem;
   margin-bottom: 1rem;
 }
 
-.filters select {
+.filter select {
   padding: 0.5rem;
   border: 1px solid #ddd;
   border-radius: 4px;
